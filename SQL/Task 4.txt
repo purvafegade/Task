@@ -1,0 +1,247 @@
+# Task 4
+
+USE banking_db;
+SELECT * FROM dmart_data;
+
+DESCRIBE dmart_data ; 
+# The dmart_data file was extracted from Excel with columns initially stored as text or numbers.
+# Required constraints and SQL commands will be applied for proper data consistency.
+
+# ALTER TABLE table_name RENAME COLUMN old_name TO new_name;
+ALTER TABLE dmart_data RENAME COLUMN `ï»¿order_id` TO order_id; 
+SELECT * FROM dmart_data;
+
+ALTER TABLE dmart_data  MODIFY `order_id` VARCHAR(20) PRIMARY KEY;
+
+ALTER TABLE dmart_data 
+MODIFY region VARCHAR(20) NOT NULL;
+
+ALTER TABLE dmart_data 
+MODIFY category VARCHAR(20) NOT NULL;
+
+ALTER TABLE dmart_data 
+MODIFY sales DECIMAL(10,2) DEFAULT 0.00 ;
+
+ALTER TABLE dmart_data 
+MODIFY discount DECIMAL(10,2) DEFAULT 0.00;
+
+ALTER TABLE dmart_data 
+MODIFY quantity INT DEFAULT 0;
+
+SET SQL_SAFE_UPDATES = 0 ; 
+UPDATE dmart_data
+SET order_date = STR_TO_DATE(order_date, '%d-%m-%Y');
+ALTER TABLE dmart_data 
+MODIFY order_date DATE NOT NULL;
+
+UPDATE dmart_data
+SET delivery_date = STR_TO_DATE(delivery_date, '%d-%m-%Y');
+ALTER TABLE dmart_data 
+MODIFY delivery_date DATE NOT NULL;
+
+ALTER TABLE dmart_data 
+MODIFY customer_type VARCHAR(20) NOT NULL;
+
+ALTER TABLE dmart_data 
+MODIFY payment_mode VARCHAR(20) NOT NULL;
+
+ALTER TABLE dmart_data 
+MODIFY profit DECIMAL (10,2) NOT NULL;
+
+ALTER TABLE dmart_data 
+MODIFY city VARCHAR(30) NOT NULL;
+
+DESCRIBE dmart_data;
+
+-- Create a new column named Month_Name and store the month name extract from order_date.
+ALTER TABLE dmart_data ADD Month_Name VARCHAR(15);
+SET SQL_SAFE_UPDATES = 0 ; 
+UPDATE dmart_data SET Month_Name = MONTHNAME(order_date);
+
+-- Create a new column named Discount_Amount and calculate a 10% discount on the Sales amount.
+ALTER TABLE dmart_data ADD Discount_Amount DECIMAL(10,2);
+UPDATE dmart_data SET Discount_Amount = sales * 10/100 ;
+
+-- Create a new column named Net_Revenue and calculate Net Revenue after applying a 10% discount on Sales.
+ALTER TABLE dmart_data ADD Net_Revenue DECIMAL (10,2);
+UPDATE dmart_data SET Net_Revenue = sales - Discount_Amount;
+
+-- Display all records from the dmart_data table.
+SELECT * FROM dmart_data;
+
+-- Display only order_id, category, sales, and profit.
+SELECT order_id, category, sales, profit FROM dmart_data;
+
+-- Display all unique regions.
+SELECT DISTINCT region FROM dmart_data;
+
+-- Display all unique categories.
+SELECT DISTINCT category FROM dmart_data;
+
+-- Display all unique payment modes.
+SELECT DISTINCT payment_mode FROM dmart_data;
+
+-- Display all unique customer types.
+SELECT DISTINCT customer_type FROM dmart_data;
+
+-- Display order_id, sales, and profit with appropriate aliases.
+SELECT order_id AS Order_ID, sales AS Sales_Amount, profit AS Profit_Amount FROM dmart_data;
+
+-- Display orders where the region is East.
+SELECT * FROM dmart_data WHERE region = "East";
+
+-- Display orders where the category is Electronics.
+SELECT * FROM dmart_data WHERE category = "Electronics";
+
+-- Display orders where sales are greater than 3000.
+SELECT * FROM dmart_data WHERE sales > 3000;
+
+-- Display orders where profit is greater than 500.
+SELECT * FROM dmart_data WHERE profit > 500;
+
+-- Display orders where quantity is greater than 5.
+SELECT * FROM dmart_data WHERE quantity > 5;
+
+-- Display orders where discount is greater than 20%.
+SELECT * FROM dmart_data WHERE discount> 20/100;
+
+-- Display orders where payment mode is UPI.
+SELECT * FROM dmart_data WHERE payment_mode = "UPI";
+
+-- Display orders where customer type is Member.
+SELECT * FROM dmart_data WHERE customer_type = "Member";
+
+-- Display orders from the East region where sales are greater than 2000.
+SELECT * FROM dmart_data WHERE region = "East" AND sales > 2000;
+
+-- Display orders where category is Clothing OR Grocery.
+SELECT * FROM dmart_data WHERE category = "Clothing" OR Category = "Grocery";
+
+-- Display orders where payment mode is UPI AND customer type is Member.
+SELECT * FROM dmart_data WHERE payment_mode = "UPI" AND customer_type = "Member";
+
+-- Display orders where sales are greater than 3000 AND profit is greater than 500.
+SELECT * FROM dmart_data WHERE sales > 3000 AND profit > 500;
+
+-- Display orders that are NOT from the East region.
+SELECT * FROM dmart_data WHERE NOT region = "East";
+
+-- Display orders where sales are between 1000 and 3000.
+SELECT * FROM dmart_data WHERE sales BETWEEN 1000 AND 3000;
+
+-- Display orders where quantity is between 3 and 6.
+SELECT * FROM dmart_data WHERE quantity BETWEEN 3 AND 6;
+
+-- Display orders from East, West, and North regions.
+SELECT * FROM dmart_data WHERE region IN ("East", "West", "North");
+
+-- Find customers whose city starts with M.
+SELECT * FROM dmart_data WHERE city LIKE "M%";
+
+-- Find cities ending with i.
+SELECT * FROM dmart_data WHERE city LIKE "%i";
+
+-- Display all orders sorted by sales from highest to lowest.
+SELECT * FROM dmart_data ORDER BY sales DESC;
+
+-- Display all orders sorted by profit from lowest to highest.
+SELECT * FROM dmart_data ORDER BY profit ASC;
+
+-- Display orders first by region and then by sales in descending order.
+ SELECT * FROM dmart_data ORDER BY region, sales DESC;
+ 
+ -- Display the top 5 orders based on sales.
+SELECT * FROM dmart_data ORDER BY sales DESC LIMIT 5;
+
+-- Find the total profit.
+SELECT SUM(PROFIT) AS Total_Profit FROM dmart_data;
+
+-- Find the total quantity sold.
+SELECT SUM(quantity) AS Total_Quantity FROM dmart_data;
+
+-- Find the average sales amount.
+SELECT AVG(sales) AS Average_Sales FROM dmart_data;
+
+-- Find the maximum sales amount.
+SELECT MAX(sales) AS Maximum_Sales FROM dmart_data;
+
+-- Find the minimum sales amount.
+SELECT MIN(sales) AS Minimum_Sales FROM dmart_data;
+
+-- Count the total number of orders.
+SELECT COUNT(order_id) AS Total_Orders FROM dmart_data;
+
+-- Find total sales by region.
+SELECT region, SUM(sales) AS Total_Sales FROM dmart_data GROUP BY region;
+
+-- Find total profit by region.
+SELECT region, SUM(profit) AS Total_Profit FROM dmart_data GROUP BY region;
+
+-- Find total sales by category.
+SELECT category, SUM(sales) AS Total_Sales FROM dmart_data GROUP BY category;
+
+-- Find total quantity sold by category.
+SELECT category, SUM(quantity) AS Total_Quantity FROM dmart_data GROUP BY category;
+
+-- Find number of orders by customer type.
+SELECT customer_type, COUNT(order_id) AS Total_Orders FROM dmart_data GROUP BY customer_type;
+
+-- Find total sales by payment mode.
+SELECT payment_mode, SUM(sales) AS Total_Sales FROM dmart_data GROUP BY payment_mode;
+
+-- Find total profit by city.
+SELECT city, SUM(profit) AS Total_Profit FROM dmart_data GROUP BY city;
+
+-- Find average discount by category.
+SELECT category, AVG(discount) AS Average_Discount FROM dmart_data GROUP BY category;
+
+-- Display total sales by month.
+SELECT Month_Name, SUM(sales) AS Total_Sales FROM dmart_data GROUP BY Month_Name;
+
+-- Display customer types having more than 3 orders.
+SELECT customer_type, COUNT(order_id) AS Total_Orders FROM dmart_data 
+GROUP BY customer_type HAVING Total_Orders > 3;
+
+-- Categorize orders based on sales:
+-- Sales >= 4000 → High
+-- Sales >= 2000 → Medium
+-- Otherwise → Low
+SELECT order_id, sales , IF(sales >= 4000, "High", IF(sales >= 2000, "Medium", "Low"))
+AS Order_Category FROM dmart_data;
+
+-- Categorize profit:
+-- Profit >= 800 → High Profit
+-- Profit >= 400 → Medium Profit
+-- Otherwise → Low Profit
+SELECT order_id, profit, IF(profit >= 800, "High Profit", IF(profit >= 400, "Medium Profit", "Low Profit"))
+AS Profit_Category FROM dmart_data;
+
+-- Categorize discount:
+-- Discount >= 30% → High Discount
+-- Discount >= 15% → Medium Discount
+-- Otherwise → Low Discount
+SELECT order_id, discount, IF(discount >= 30/100, "High Discount",
+IF(discount >= 15/100, "Medium Discount", "Low Discount"))
+AS Discount_Category FROM dmart_data;
+
+-- Categorize customers:
+-- Member → Premium Customer
+-- Regular → Regular Customer
+-- New → New Customer
+SELECT order_id, customer_type,
+CASE
+WHEN customer_type = "Member" THEN "Premium Customer"
+WHEN customer_type = "Regular" THEN "Regular Customer"
+ELSE "New Customer"
+END AS Customer_Status FROM dmart_data;
+
+-- Categorize orders based on quantity:
+-- Quantity >= 6 → Bulk Order
+-- Quantity >= 3 → Medium Order
+-- Otherwise → Small Order
+SELECT order_id, quantity, 
+CASE
+WHEN quantity >= 6 THEN "Bulk Order"
+WHEN quantity >= 3 THEN "Medium Order"
+ELSE "Small Order"
+END AS Quantity_Category FROM dmart_data;

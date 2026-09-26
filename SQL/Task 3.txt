@@ -1,0 +1,386 @@
+# Task 3
+
+1. Create a database named BankingDB.
+CREATE DATABASE BankingDB;
+
+2. Select/Use the BankingDB database.
+USE BankingDB;
+
+3. Create a Customers table with the following columns:
+--    Customer_ID
+--    Customer_Name
+--    Email
+--    Phone
+--    City
+--    Age
+--    Gender
+--    Account_Balance
+--    Registration_Date
+CREATE TABLE Customer(
+Customer_ID INT PRIMARY KEY AUTO_INCREMENT,
+Customer_Name VARCHAR(100) NOT NULL,
+Email VARCHAR(30) UNIQUE,
+Phone VARCHAR(10) UNIQUE,
+City VARCHAR(20) NOT NULL,
+Age INT CHECK (Age >=18),
+Gender CHAR (1) NOT NULL,
+Account_Balance DECIMAL (10,2) DEFAULT 0.00,
+Registration_Date DATE 
+);
+
+4. Add a new column named Customer_Status to the Customers table with the CHAR datatype.
+ALTER TABLE Customer ADD Customer_Status CHAR(10);
+
+5. Modify the datatype of Customer_Status from CHAR to VARCHAR(20).
+ALTER TABLE Customer MODIFY Customer_Status VARCHAR(20);
+
+6. Rename the Customers table to Customer_Details.
+RENAME TABLE Customer TO Customer_Details;
+
+7. Remove the Customer_Status column from the Customer_Details table.
+ALTER TABLE Customer_Details DROP Customer_Status;
+
+8. Insert 5 new customer records into the Customer_Details table.
+INSERT INTO Customer_Details
+(Customer_Name, Email, Phone, City, Age, Gender, Account_Balance, Registration_Date)
+VALUES
+('Rahul Sharma', 'rahul@gmail.com', '9876543210', 'Mumbai', 25, 'M', 45000.50, '2025-01-15'),
+('Priya Patil', 'priya@gmail.com', '9123456780', 'Pune', 22, 'F', 32500.00, '2025-02-10'),
+('Amit Verma', 'amit@gmail.com', '9988776655', 'Nashik', 29, 'M', 58750.75, '2025-03-05'),
+('Sneha Joshi', 'sneha@gmail.com', '9012345678', 'Thane', 26, 'F', 41200.25, '2025-04-20'),
+('Rohan Mehta', 'rohan@gmail.com', '9765432109', 'Nagpur', 31, 'M', 67500.00, '2025-05-12'
+);
+
+9. Update the Account_Balance of the customer whose Customer_ID is 5.
+UPDATE Customer_Details SET Account_Balance = 85000.00 WHERE Customer_ID = 5;
+
+10. Change the City of the customer whose Customer_ID is 10 to 'Mumbai'.
+UPDATE Customer_Details SET City = "Mumbai" WHERE Customer_ID = 10;
+
+11. Update the Gender of the customer whose Customer_ID is 10.
+UPDATE Customer_Details SET Gender = "F" WHERE Customer_ID = 10;
+
+12. Increase the Account_Balance by 5000 for all customers from Mumbai.
+UPDATE Customer_Details SET Account_Balance = Account_Balance + 5000 WHERE City = "Mumbai";
+
+13. Delete the customer whose Customer_ID is 2.
+DELETE FROM Customer_Details WHERE Customer_ID = 2;
+
+14. Delete all customers whose Account_Balance is less than 30000.
+DELETE FROM Customer_Details WHERE Account_Balance < 30000;
+
+15. Permanently delete the Customer_Details table.
+DROP TABLE Customer_Details;
+
+16. Permanently delete the BankingDB database.
+DROP DATABASE BankingDB;
+
+Create Customer Table
+CREATE TABLE Customers (
+    Customer_ID INT PRIMARY KEY AUTO_INCREMENT,
+    Customer_Name VARCHAR(100) NOT NULL,
+    Email VARCHAR(100) UNIQUE,
+    Phone VARCHAR(15),
+    City VARCHAR(50),
+    Age INT CHECK (Age >= 18),
+    Gender CHAR(1),
+    Account_Balance DECIMAL(12,2) DEFAULT 0.00,
+    Registration_Date DATE
+    );
+    
+INSERT INTO Customers
+(Customer_Name, Email, Phone, City, Age, Gender, Account_Balance, Registration_Date)
+VALUES
+('Aarav Sharma', 'aarav.sharma@gmail.com', '9876543210', 'Mumbai', 25, 'M', 45000.50, '2025-01-10'),
+('Priya Verma', 'priya.verma@gmail.com', '9876543211', 'Delhi', 28, 'F', 62000.00, '2025-01-15'),
+('Rahul Singh', 'rahul.singh@gmail.com', '9876543212', 'Pune', 32, 'M', 38500.75, '2025-01-20'),
+('Ananya Gupta', 'ananya.gupta@gmail.com', '9876543213', 'Bangalore', 24, 'F', 52000.25, '2025-02-02'),
+('Vikram Patel', 'vikram.patel@gmail.com', '9876543214', 'Ahmedabad', 35, 'M', 75000.00, '2025-02-08'),
+('Neha Joshi', 'neha.joshi@gmail.com', '9876543215', 'Mumbai', 27, 'F', 41000.50, '2025-02-14'),
+('Rohan Mehta', 'rohan.mehta@gmail.com', '9876543216', 'Chennai', 30, 'M', 68000.00, '2025-02-20'),
+('Sneha Kapoor', 'sneha.kapoor@gmail.com', '9876543217', 'Delhi', 26, 'F', 35500.75, '2025-02-25'),
+('Aditya Rao', 'aditya.rao@gmail.com', '9876543218', 'Hyderabad', 29, 'M', 59000.00, '2025-03-01'),
+('Kavya Nair', 'kavya.nair@gmail.com', '9876543219', 'Kochi', 31, 'F', 47000.25, '2025-03-05'),
+
+('Arjun Malhotra', 'arjun.malhotra@gmail.com', '9876543220', 'Pune', 34, 'M', 82000.50, '2025-03-10'),
+('Pooja Shah', 'pooja.shah@gmail.com', '9876543221', 'Mumbai', 23, 'F', 29000.00, '2025-03-15'),
+('Karan Kapoor', 'karan.kapoor@gmail.com', '9876543222', 'Delhi', 37, 'M', 91000.75, '2025-03-20'),
+('Meera Iyer', 'meera.iyer@gmail.com', '9876543223', 'Chennai', 28, 'F', 53000.00, '2025-03-25'),
+('Sahil Khan', 'sahil.khan@gmail.com', '9876543224', 'Lucknow', 33, 'M', 44000.50, '2025-04-01'),
+('Riya Das', 'riya.das@gmail.com', '9876543225', 'Kolkata', 25, 'F', 37000.25, '2025-04-05'),
+('Manish Yadav', 'manish.yadav@gmail.com', '9876543226', 'Jaipur', 40, 'M', 105000.00, '2025-04-10'),
+('Ishita Roy', 'ishita.roy@gmail.com', '9876543227', 'Kolkata', 29, 'F', 61000.50, '2025-04-15'),
+('Nikhil Bansal', 'nikhil.bansal@gmail.com', '9876543228', 'Noida', 36, 'M', 78000.00, '2025-04-20'),
+('Simran Kaur', 'simran.kaur@gmail.com', '9876543229', 'Chandigarh', 27, 'F', 49000.75, '2025-04-25'),
+
+('Varun Sethi', 'varun.sethi@gmail.com', '9876543230', 'Delhi', 31, 'M', 56000.00, '2025-05-01'),
+('Tanya Agarwal', 'tanya.agarwal@gmail.com', '9876543231', 'Pune', 24, 'F', 33000.50, '2025-05-05'),
+('Deepak Mishra', 'deepak.mishra@gmail.com', '9876543232', 'Lucknow', 42, 'M', 115000.00, '2025-05-10'),
+('Nandini Rao', 'nandini.rao@gmail.com', '9876543233', 'Hyderabad', 30, 'F', 67000.25, '2025-05-15'),
+('Amit Choudhary', 'amit.choudhary@gmail.com', '9876543234', 'Jaipur', 38, 'M', 88000.50, '2025-05-20'),
+('Shreya Menon', 'shreya.menon@gmail.com', '9876543235', 'Kochi', 26, 'F', 42000.00, '2025-05-25'),
+('Raj Malhotra', 'raj.malhotra@gmail.com', '9876543236', 'Mumbai', 35, 'M', 73000.75, '2025-06-01'),
+('Divya Reddy', 'divya.reddy@gmail.com', '9876543237', 'Hyderabad', 29, 'F', 51000.50, '2025-06-05'),
+('Mohit Agarwal', 'mohit.agarwal@gmail.com', '9876543238', 'Noida', 33, 'M', 64000.00, '2025-06-10'),
+('Ayesha Khan', 'ayesha.khan@gmail.com', '9876543239', 'Mumbai', 27, 'F', 46000.25, '2025-06-15'),
+
+('Suresh Kumar', 'suresh.kumar@gmail.com', '9876543240', 'Bangalore', 45, 'M', 125000.00, '2025-06-20'),
+('Pallavi Singh', 'pallavi.singh@gmail.com', '9876543241', 'Pune', 32, 'F', 58000.50, '2025-06-25'),
+('Yash Thakur', 'yash.thakur@gmail.com', '9876543242', 'Chandigarh', 28, 'M', 39000.75, '2025-07-01'),
+('Komal Jain', 'komal.jain@gmail.com', '9876543243', 'Jaipur', 25, 'F', 35000.00, '2025-07-05'),
+('Harsh Vora', 'harsh.vora@gmail.com', '9876543244', 'Ahmedabad', 39, 'M', 97000.50, '2025-07-10'),
+('Mansi Patel', 'mansi.patel@gmail.com', '9876543245', 'Ahmedabad', 30, 'F', 55000.25, '2025-07-15'),
+('Akash Soni', 'akash.soni@gmail.com', '9876543246', 'Indore', 34, 'M', 69000.00, '2025-07-20'),
+('Ritika Sharma', 'ritika.sharma@gmail.com', '9876543247', 'Delhi', 23, 'F', 31000.75, '2025-07-25'),
+('Gaurav Tiwari', 'gaurav.tiwari@gmail.com', '9876543248', 'Kanpur', 41, 'M', 83000.50, '2025-08-01'),
+('Muskan Gupta', 'muskan.gupta@gmail.com', '9876543249', 'Mumbai', 26, 'F', 48000.00, '2025-08-05'),
+
+('Abhishek Jain', 'abhishek.jain@gmail.com', '9876543250', 'Indore', 37, 'M', 76000.25, '2025-08-10'),
+('Sakshi Verma', 'sakshi.verma@gmail.com', '9876543251', 'Pune', 29, 'F', 43000.50, '2025-08-12'),
+('Ravi Shukla', 'ravi.shukla@gmail.com', '9876543252', 'Lucknow', 44, 'M', 99000.00, '2025-08-15'),
+('Aditi Kapoor', 'aditi.kapoor@gmail.com', '9876543253', 'Delhi', 27, 'F', 57000.75, '2025-08-18'),
+('Vivek Sharma', 'vivek.sharma@gmail.com', '9876543254', 'Bangalore', 36, 'M', 72000.50, '2025-08-20'),
+('Tanvi Joshi', 'tanvi.joshi@gmail.com', '9876543255', 'Nashik', 24, 'F', 34000.00, '2025-08-22'),
+('Sameer Ali', 'sameer.ali@gmail.com', '9876543256', 'Bhopal', 39, 'M', 86000.25, '2025-08-25'),
+('Preeti Sinha', 'preeti.sinha@gmail.com', '9876543257', 'Patna', 31, 'F', 52000.50, '2025-08-28'),
+('Naveen Kumar', 'naveen.kumar@gmail.com', '9876543258', 'Chennai', 43, 'M', 108000.00, '2025-08-30'),
+('Isha Mehta', 'isha.mehta@gmail.com', '9876543259', 'Mumbai', 28, 'F', 46500.75, '2025-09-01');
+
+A. Basic SELECT and WHERE
+1. Display all records from the Customers table.
+SELECT * FROM Customers;
+
+2. Display only Customer_Name, City, and Age.
+SELECT Customer_Name, City, Age FROM Customers;
+
+3. Display customers who live in Mumbai.
+SELECT * FROM Customers WHERE City = "Mumbai";
+
+4. Display customers whose Age is greater than 30.
+SELECT * FROM Customers WHERE Age > 30;
+
+5. Display customers whose Account_Balance is greater than 50000.
+SELECT * FROM Customers WHERE Account_Balance > 50000;
+
+6. Display customers whose Age is less than 25.
+SELECT * FROM Customers WHERE Age < 25;
+
+7. Display customers whose Age is greater than or equal to 35.
+SELECT * FROM Customers WHERE Age >= 35;
+
+8. Display customers whose Account_Balance is less than or equal to 40000.
+SELECT * FROM Customers WHERE Account_Balance <= 40000;
+
+9. Display the customer whose Customer_ID is equal to 10.
+SELECT * FROM Customers WHERE Customer_ID = 10;
+
+10. Display customers whose Age is not equal to 30.
+SELECT * FROM Customers WHERE Age != 30;
+
+
+B. Comparison Operators
+11. Find customers whose Age > 30.
+SELECT * FROM Customers WHERE Age > 30;
+
+12. Find customers whose Age < 30.
+SELECT * FROM Customers WHERE Age < 30;
+
+13. Find customers whose Age >= 35.
+SELECT * FROM Customers WHERE Age >= 35;
+
+14. Find customers whose Age <= 25.
+SELECT * FROM Customers WHERE Age <= 25;
+
+15. Find customers whose City = 'Mumbai'.
+SELECT * FROM Customers WHERE City = "Mumbai";
+
+16. Find customers whose Age != 30.
+SELECT * FROM Customers WHERE Age != 30;
+
+17. Find customers whose Account_Balance > 75000.
+SELECT * FROM Customers WHERE Account_Balance > 75000;
+
+18. Find customers whose Account_Balance <= 50000.
+SELECT * FROM Customers WHERE Account_Balance <= 50000;
+
+
+C. Logical Operators – AND
+19. Display customers who live in Mumbai AND are older than 25.
+SELECT * FROM Customers WHERE City = "Mumbai" AND Age >25;
+
+20. Display customers whose Age is greater than 30 AND Account_Balance is greater than 70000.
+SELECT * FROM Customers WHERE Age>30 AND Account_Balance > 70000;
+
+21. Display customers who are Female AND live in Delhi.
+SELECT * FROM Customers WHERE Gender = "F" AND City = "Delhi";
+
+22. Display customers who live in Pune AND have Account_Balance greater than 40000.
+SELECT * FROM Customers WHERE City = "Pune" AND Account_Balance > 40000;
+
+
+D. Logical Operators – OR
+23. Display customers who live in Mumbai OR Delhi.
+SELECT * FROM Customers WHERE City = "Mumbai" OR City = "Delhi";
+
+24. Display customers whose Age is less than 25 OR greater than 40.
+SELECT * FROM Customers WHERE Age <25 OR Age > 40;
+
+25. Display customers who live in Pune OR Bangalore.
+SELECT * FROM Customers WHERE City = "Pune" OR City = "Bangalore";
+
+26. Display customers whose Account_Balance is greater than 100000 OR Age is greater than 40.
+SELECT * FROM Customers WHERE Account_Balance > 100000 OR Age > 40;
+
+
+E. Logical Operators – NOT
+27. Display customers who are NOT from Mumbai.
+SELECT * FROM Customers WHERE NOT City = "Mumbai";
+
+28. Display customers whose Age is NOT 30.
+SELECT * FROM Customers WHERE NOT Age = 30;
+
+29. Display customers who are NOT Female.
+SELECT * FROM Customers WHERE NOT Gender ="F";
+
+30. Display customers whose City is NOT Delhi.
+SELECT * FROM Customers WHERE NOT City = "Delhi";
+
+
+F. BETWEEN
+31. Display customers whose Age is between 25 and 35.
+SELECT * FROM Customers WHERE Age BETWEEN 25 AND 35;
+
+32. Display customers whose Account_Balance is between 40000 and 70000.
+SELECT * FROM Customers WHERE Account_Balance BETWEEN 40000 AND 70000;
+
+33. Display customers whose Registration_Date is between '2025-03-01' and '2025-06-30'.
+SELECT * FROM Customers WHERE Registration_Date BETWEEN "2025-03-01" AND "2025-06-30";
+
+34. Display customers whose Age is NOT between 25 and 35.
+SELECT * FROM Customers WHERE NOT Age BETWEEN 25 AND 35;
+
+
+G. LIKE
+35. Display customers whose name starts with 'A'.
+SELECT * FROM Customers WHERE Customer_Name LIKE "A%";
+
+36. Display customers whose name ends with 'a'.
+SELECT * FROM Customers WHERE Customer_Name LIKE "%a";
+
+37. Display customers whose name contains 'an'.
+SELECT * FROM Customers WHERE Customer_Name LIKE "%an%";
+
+38. Display customers whose name has 'sh' anywhere.
+SELECT * FROM Customers WHERE Customer_Name LIKE "%sh%";
+
+39. Display customers whose name starts with 'M' and has any number of characters after M.
+SELECT * FROM Customers WHERE Customer_Name LIKE "M%";
+
+40. Display customers whose name has exactly 5 characters.
+SELECT * FROM Customers WHERE Customer_Name LIKE "_____";
+
+41. Display customers whose name starts with 'A' followed by exactly one character.
+SELECT * FROM Customers WHERE Customer_Name LIKE "A_";
+
+42. Display customers whose name starts with 'A' followed by exactly two characters.
+SELECT * FROM Customers WHERE Customer_Name LIKE "A__";
+
+43. Display customers whose city starts with 'M'.
+SELECT * FROM Customers WHERE City LIKE "M%";
+
+44. Display customers whose email ends with '@gmail.com'.
+SELECT * FROM Customers WHERE Email LIKE "%@gmail.com";
+
+
+H. IS NULL / IS NOT NULL
+45. Display customers whose Phone number is NULL.
+SELECT * FROM Customers WHERE Phone IS NULL;
+
+46. Display customers whose Phone number is NOT NULL.
+SELECT * FROM Customers WHERE NOT Phone IS NULL;
+
+47. Display customers whose Registration_Date is NOT NULL.
+SELECT * FROM Customers WHERE NOT Registration_Date IS NULL;
+
+48. Display customers whose Gender is NULL.
+SELECT * FROM Customers WHERE Gender IS NULL;
+
+
+I. DISTINCT
+49. Display all unique cities.
+SELECT DISTINCT City FROM Customers;
+
+50. Display all unique genders.
+SELECT DISTINCT Gender FROM Customers;
+
+51. Display all unique ages.
+SELECT DISTINCT Age FROM Customers;
+
+52. Display unique combinations of City and Gender.
+SELECT DISTINCT City , Gender FROM Customers;
+
+
+J. Aggregate Functions
+53. Find the total number of customers.
+SELECT SUM(Customer_ID) AS Total_Customers FROM Customers;
+
+54. Find the total Account_Balance of all customers.
+SELECT SUM(Account_Balance) AS Total_Balance FROM Customers;
+
+55. Find the average Account_Balance.
+SELECT AVG(Account_Balance) AS Average_Balance FROM Customers;
+
+56. Find the minimum Account_Balance.
+SELECT MIN(Account_Balance) AS Minimum_Balance FROM Customers;
+
+57. Find the maximum Account_Balance.
+SELECT MAX(Account_Balance) AS Maximum_Balance FROM Customers;
+
+58. Find the total number of Male customers.
+SELECT COUNT(Gender) AS Total_Male FROM Customers WHERE Gender ="M";
+
+59. Find the total number of Female customers.
+SELECT COUNT(Gender) AS Total_Female FROM Customers WHERE Gender ="F";
+
+60. Find the average Age of all customers.
+SELECT AVG(Age) AS Average_Age FROM Customers;
+
+
+# K. GROUP BY
+61. Find the number of customers in each City.
+SELECT City, SUM(Customer_ID) AS Total_Customers FROM Customers GROUP BY City;
+
+62. Find the total Account_Balance for each City.
+SELECT City, SUM(Account_Balance) AS Total_Bal FROM Customers GROUP BY City;
+
+63. Find the average Account_Balance for each City.
+SELECT City, AVG(Account_Balance) AS Average_Bal FROM Customers GROUP BY City;
+
+64. Find the maximum Account_Balance in each City.
+SELECT City, MAX(Account_Balance) AS Maximum_Bal FROM Customers GROUP BY City;
+
+65. Find the minimum Account_Balance in each City.
+SELECT City, MIN(Account_Balance) AS Minimum_Bal FROM Customers GROUP BY City;
+
+66. Find the number of customers in each Gender.
+SELECT Gender, COUNT(Customer_ID) AS Total_Cust FROM Customers GROUP BY Gender;
+
+67. Find the average Age for each Gender.
+SELECT Gender, AVG(Age) AS Avg_Age FROM Customers GROUP BY Gender;
+
+68. Find the total Account_Balance for each Gender.
+SELECT Gender, SUM(Account_Balance) AS Total_Bal FROM Customers GROUP BY Gender;
+
+
+# L. GROUP BY + HAVING
+69. Display cities having more than 3 customers.
+SELECT City, COUNT(Customer_ID) AS Total_Cust FROM Customers GROUP BY City HAVING Total_Cust > 3;
+
+70. Display cities where the total Account_Balance is greater than 200000.
+SELECT City, SUM(Account_Balance) AS Total_Bal FROM Customers GROUP BY City HAVING Total_Bal > 200000;
+
+71. Display cities where the average Account_Balance is greater than 60000.
+SELECT City, AVG(Account_Balance) AS Avg_Bal FROM Customers GROUP BY City HAVING Avg_Bal > 60000;
+
+72. Display genders having more than 20 customers.
+SELECT Gender, COUNT(Customer_ID) AS Total_Cust FROM Customers GROUP BY Gender HAVING Total_Cust > 20;
